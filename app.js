@@ -11,9 +11,10 @@ app.use(express.static('public')); // Public dosyasını statik olarak belirledi
 // Templating Engine
 app.use(expressLayouts); // Express Layouts modülünü kullanacağımızı belirttik
 app.set('layout', './layouts/main'); // Layout dosyasını belirledik
+// Layout dosyası, genel olarak tüm sayfalarda kullanılacak olan HTML yapısını belirler
 app.set('view engine', 'ejs'); // View Engine olarak EJS'i belirledik
 
-app.use('/', require('./server/routers/main')); // Main router'ı kullanacağımızı belirttik
+app.use('', require('./server/routers/main')); // Main router'ı kullanacağımızı belirttik
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
