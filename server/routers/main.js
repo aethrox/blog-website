@@ -66,4 +66,46 @@ router.get('/about', (req, res) => {
 //     console.error('Error inserting posts:', err);
 //   });
 
+router.get('/post/:id', async (req, res) => { // Ana sayfa route'u oluşturduk (GET)
+  try {
+    let slug = req.params.id;
+    
+    const data = await Post.findById({ _id: slug });
+
+    const locals = {
+      title: data.title,
+      description: "Simple blog created with NodeJS, Express & MongoDB"
+    }
+
+    res.render('post', { locals, data });
+
+  } catch (error) { 
+    console.log("Error: " + error.message);
+  }
+});
+
+router.post('/search', async (req, res) => { // Ana sayfa route'u oluşturduk (GET)
+  try {
+    let searchTerm = req.body.searchTerm;
+    const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9]/g, "");
+
+    const data = await Post.find({ 
+      $or: [
+        { title: { $regex: searchNoSpecialChar, $options: 'i' } },
+        { body: { $regex: searchNoSpecialChar, $options: 'i' } }
+      ]
+    });
+
+    const locals = {
+      title: "Search",
+      description: "Simple blog created with NodeJS, Express & MongoDB"
+    }
+
+    res.render('search', { locals, data });
+
+  } catch (error) { 
+    console.log("Error: " + error.message);
+  }
+});
+
 module.exports = router; // Router'ı dışarıya aktardık
