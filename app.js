@@ -11,6 +11,11 @@ const PORT = 5000 || process.env.PORT; // Port numarasını belirledik (5000 vey
 // Connect to MongoDB
 connectDB(); // MongoDB'ye bağlandık
 
+app.use(express.urlencoded({ extended: true })); 
+// Form verilerini almak için gerekli middleware (req.body)
+app.use(express.json());
+ // JSON verilerini almak için gerekli middleware (req.body)
+
 app.use(express.static('public')); // Public dosyasını statik olarak belirledik
 
 // Templating Engine
