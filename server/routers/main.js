@@ -26,7 +26,8 @@ router.get('', async (req, res) => { // Ana sayfa route'u oluşturduk (GET)
       locals, 
       data, 
       current: page, 
-      nextPage: hasNextPage ? nextPage : null
+      nextPage: hasNextPage ? nextPage : null,
+      currentRoute: '/'
     });
   } catch (error) { 
     console.log("Error: " + error.message);
@@ -38,8 +39,12 @@ router.get('', async (req, res) => { // Ana sayfa route'u oluşturduk (GET)
 });
 
 router.get('/about', (req, res) => {
-  res.render('about');
+  res.render('about', {currentRoute: '/about'});
 });
+
+router.get('/contact', (req, res) => {
+  res.render('contact', { currentRoute: '/contact'});
+})
 
 
 // // Dinamik olarak 10 adet post oluşturmak için bir fonksiyon
@@ -77,7 +82,7 @@ router.get('/post/:id', async (req, res) => { // Ana sayfa route'u oluşturduk (
       description: "Simple blog created with NodeJS, Express & MongoDB"
     }
 
-    res.render('post', { locals, data });
+    res.render('post', { locals, data, currentRoute: `/post/${slug}` });
 
   } catch (error) { 
     console.log("Error: " + error.message);
